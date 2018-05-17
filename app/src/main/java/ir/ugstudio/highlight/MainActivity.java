@@ -7,12 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.VideoView;
 
 public class MainActivity extends AppCompatActivity {
     private Button button;
     private Button getPosition;
     private VideoView videoView;
+    private ImageView leftArrow;
+    private ImageView rightArrow;
 
     private TennisSession currentSession;
     private MyPreferenceManager preferenceManager = null;
@@ -34,7 +37,12 @@ public class MainActivity extends AppCompatActivity {
 
         button = (Button) findViewById(R.id.button);
         getPosition = (Button) findViewById(R.id.get_position);
+        leftArrow = (ImageView) findViewById(R.id.left_arrow);
+        rightArrow = (ImageView) findViewById(R.id.right_arrow);
         videoView = (VideoView) findViewById(R.id.videoview);
+
+        leftArrow.setOnClickListener(view -> videoView.seekTo(videoView.getCurrentPosition() - 5000));
+        rightArrow.setOnClickListener(view -> videoView.seekTo(videoView.getCurrentPosition() + 5000));
 
         getPosition.setOnClickListener(view -> {
             Log.d("TAG", "abcd current " + videoView.getCurrentPosition());
