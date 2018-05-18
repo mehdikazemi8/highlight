@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Highlight</string>
+    <string name="template_folder_name">//highlights//%s//%s//</string>
+    <string name="template_time">%s:%s:%s.%s</string>
 </resources>

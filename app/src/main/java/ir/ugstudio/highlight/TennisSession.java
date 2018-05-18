@@ -11,6 +11,15 @@ public class TennisSession {
         this.videoPath = videoPath;
     }
 
+    public String getVideoDate() {
+        if (videoPath == null) {
+            return null;
+        }
+
+        String name = videoPath.substring(videoPath.lastIndexOf("/") + 1);
+        return name.substring(name.indexOf("_") + 1, name.lastIndexOf("_"));
+    }
+
     public int getLastPosition() {
         int lastPosition = 0;
         for (VideoPart videoPart : videoParts) {

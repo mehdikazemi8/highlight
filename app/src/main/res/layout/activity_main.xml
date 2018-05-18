@@ -13,18 +13,11 @@
         android:text="import video" />
 
     <Button
-        android:id="@+id/get_position"
+        android:id="@+id/set_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="get position"
+        android:text="set start"
         app:layout_constraintLeft_toRightOf="@id/button" />
-
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="save"
-        app:layout_constraintLeft_toRightOf="@id/get_position" />
 
     <VideoView
         android:id="@+id/videoview"
@@ -34,6 +27,16 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/start_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@id/set_start"
+        app:layout_constraintLeft_toRightOf="@id/set_start"
+        app:layout_constraintTop_toTopOf="@id/set_start" />
 
     <ImageView
         android:id="@+id/left_arrow"
@@ -62,5 +65,46 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/farzad_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="farzad"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/mehdi_save" />
+
+    <Button
+        android:id="@+id/mehdi_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="mehdi"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toRightOf="@id/farzad_save"
+        app:layout_constraintRight_toLeftOf="@id/masoud_save" />
+
+    <Button
+        android:id="@+id/masoud_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="masoud"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toRightOf="@id/mehdi_save"
+        app:layout_constraintRight_toLeftOf="@id/saman_save" />
+
+    <Button
+        android:id="@+id/saman_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="saman"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintLeft_toRightOf="@id/masoud_save"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
