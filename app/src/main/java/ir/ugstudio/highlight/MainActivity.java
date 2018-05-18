@@ -1,7 +1,6 @@
 package ir.ugstudio.highlight;
 
 import android.Manifest;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,20 +27,34 @@ public class MainActivity extends AppCompatActivity {
     private TennisSession currentSession;
     private MyPreferenceManager preferenceManager = null;
 
-    private static final int PICK_FROM_GALLERY = 1;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         initSharedPreferencesAndActionBar();
-
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 77);
-
         findViews();
         configureViews();
+        openSelectVideoFragment();
     }
+
+    private void openSelectVideoFragment() {
+        PickVideoFragment fragment = PickVideoFragment.newInstance(onNameSelectedListener);
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, fragment, null)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    private OnNameSelectedListener onNameSelectedListener = name -> {
+        getSupportFragmentManager().popBackStack();
+
+        currentSession = preferenceManager.getTennisSession(name);
+        videoView.setVideoURI(Uri.parse(name));
+        videoView.seekTo(currentSession.getLastPosition());
+        videoView.start();
+    };
 
     private void initSharedPreferencesAndActionBar() {
         try {
@@ -68,19 +81,21 @@ public class MainActivity extends AppCompatActivity {
 
         save.setOnClickListener(view -> {
             try {
-                File file = new File(currentSession.getVideoURI().getPath().substring(
-                        currentSession.getVideoURI().getPath().indexOf(":") + 1
-                ));
-                File folder = Environment.getExternalStorageDirectory();
-                String finalPath = folder.getPath() + File.separator;
-                File file2 = new File(finalPath);
+                File file = new File(currentSession.getVideoPath());
+
+                File mydir = new File(Environment.getExternalStorageDirectory() + "/hhh222/farzad/");
+                if (!mydir.exists())
+                    mydir.mkdirs();
+                else
+                    Log.d("error", "dir. already exists");
+                File file2 = new File(mydir.getPath() + File.separator + "/farzad_");
 
                 Log.d("TAG", "abcd file path " + file.getPath());
                 Log.d("TAG", "abcd file222 path " + file2.getPath());
 
                 TrimVideoUtils.startTrim(
                         file,
-                        file.getPath(), 1000, 2000, new OnTrimVideoListener() {
+                        file2.getPath(), 1000, 2000, new OnTrimVideoListener() {
                             @Override
                             public void getResult(Uri uri) {
                                 Log.d("TAG", "result " + uri);
@@ -102,24 +117,6 @@ public class MainActivity extends AppCompatActivity {
             preferenceManager.putTennisSession(currentSession);
         });
 
-        button.setOnClickListener(view -> {
-            Intent intent = new Intent();
-            intent.setType("video/*");
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(Intent.createChooser(intent, "Complete action using"), PICK_FROM_GALLERY);
-        });
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != RESULT_OK) return;
-
-        if (requestCode == PICK_FROM_GALLERY) {
-            Uri videoURI = data.getData();
-            currentSession = preferenceManager.getTennisSession(videoURI);
-            videoView.setVideoURI(videoURI);
-            videoView.seekTo(currentSession.getLastPosition());
-            videoView.start();
-        }
+        button.setOnClickListener(view -> openSelectVideoFragment());
     }
 }

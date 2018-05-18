@@ -2,7 +2,6 @@ package ir.ugstudio.highlight;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -23,18 +22,17 @@ public class MyPreferenceManager {
     }
 
     public MyPreferenceManager(Context context) {
-        sharedPreferences = context.getSharedPreferences("abcd", Context.MODE_PRIVATE);
+        sharedPreferences = context.getSharedPreferences("highlights_preferences", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
 
-    public TennisSession getTennisSession(Uri videoURI) {
-        String json = sharedPreferences.getString(videoURI.toString(), null);
+    public TennisSession getTennisSession(String videoPath) {
+        String json = sharedPreferences.getString(videoPath, null);
 
         Log.d("TAG", "abcd " + json);
 
-        // todo remove
-        if (json == null || true) {
-            return new TennisSession(videoURI);
+        if (json == null) {
+            return new TennisSession(videoPath);
         }
 
         Gson gson = new Gson();
@@ -44,7 +42,7 @@ public class MyPreferenceManager {
     public void putTennisSession(TennisSession session) {
         String json = new Gson().toJson(session);
         Log.d("TAG", json);
-        editor.putString(session.getVideoURI().toString(), json);
+        editor.putString(session.getVideoPath(), json);
         editor.apply();
     }
 }
