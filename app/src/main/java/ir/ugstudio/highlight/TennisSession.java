@@ -1,13 +1,15 @@
 package ir.ugstudio.highlight;
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class TennisSession {
-    private String videoURI = null;
+    private Uri videoURI = null;
     private List<VideoPart> videoParts = new ArrayList<>();
 
-    public TennisSession(String videoURI) {
+    public TennisSession(Uri videoURI) {
         this.videoURI = videoURI;
     }
 
@@ -23,11 +25,11 @@ public class TennisSession {
         return lastPosition;
     }
 
-    public String getVideoURI() {
+    public Uri getVideoURI() {
         return videoURI;
     }
 
-    public void setVideoURI(String videoURI) {
+    public void setVideoURI(Uri videoURI) {
         this.videoURI = videoURI;
     }
 
